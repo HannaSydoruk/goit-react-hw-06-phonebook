@@ -7,7 +7,7 @@ import {
   addContact,
   removeContact,
   setFilter,
-} from '../redux/contacts/contactsReducer';
+} from '../redux/contacts/contactsSlice';
 
 export const App = () => {
   const dispatch = useDispatch();
