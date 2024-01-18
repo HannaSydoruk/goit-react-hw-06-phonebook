@@ -1,5 +1,5 @@
 import css from './ContactListItem.module.css';
-const ContactListItem = ({ contact, onDeleteHandler }) => {
+export const ContactListItem = ({ contact, onDeleteHandler }) => {
   return (
     <li className={css['contact-list']}>
       <span className={css.name}>{contact.name}</span>
@@ -15,5 +15,3 @@ const ContactListItem = ({ contact, onDeleteHandler }) => {
     </li>
   );
 };
-
-export default ContactListItem;

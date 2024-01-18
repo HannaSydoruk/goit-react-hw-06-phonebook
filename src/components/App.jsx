@@ -1,19 +1,18 @@
-import { useState, useEffect } from 'react';
 import { nanoid } from 'nanoid';
-import ContactForm from './ContactForm/ContactForm';
-import ContactList from './ContactList/ContactList';
-import Filter from './Filter/Filter';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { ContactForm, ContactList, Filter } from 'components';
+
+import {
+  addContact,
+  removeContact,
+  setFilter,
+} from '../redux/contacts/contactsReducer';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(() => {
-    const itemsStr = localStorage.getItem('contacts');
-    return itemsStr ? JSON.parse(itemsStr) : [];
-  });
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  const dispatch = useDispatch();
+  const contacts = useSelector(store => store.contacts.contacts);
+  const filter = useSelector(store => store.contacts.filter);
 
   const formSubmitHandler = data => {
     const hasDuplicates = contacts.some(
@@ -28,17 +27,19 @@ export const App = () => {
       ...data,
     };
 
-    setContacts(prevState => [...prevState, contact]);
+    const action = addContact(contact);
+    dispatch(action);
   };
 
   const onChangeFilter = e => {
-    setFilter(_ => e.target.value);
+    const value = e.target.value;
+    const action = setFilter(value);
+    dispatch(action);
   };
 
   const onDeleteHandler = contactId => {
-    setContacts(prevState => [
-      ...prevState.filter(contact => contact.id !== contactId),
-    ]);
+    const action = removeContact(contactId);
+    dispatch(action);
   };
 
   const filteredContacts = contacts.filter(contact => {
@@ -46,6 +47,7 @@ export const App = () => {
       .toLowerCase()
       .includes(filter.trim().toLocaleLowerCase());
   });
+
   return (
     <div>
       <h1>Phonebook</h1>

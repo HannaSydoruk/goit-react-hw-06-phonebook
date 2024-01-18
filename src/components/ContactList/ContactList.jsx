@@ -1,7 +1,7 @@
-import ContactListItem from 'components/ContactListItem/ContactListItem';
+import { ContactListItem } from 'components';
 import css from './ContactList.module.css';
 
-const ContactList = ({ contacts, onDeleteHandler }) => {
+export const ContactList = ({ contacts, onDeleteHandler }) => {
   return (
     <>
       <ul className={css.contactlist}>
@@ -18,5 +18,3 @@ const ContactList = ({ contacts, onDeleteHandler }) => {
     </>
   );
 };
-
-export default ContactList;
